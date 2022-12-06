@@ -21,11 +21,8 @@ function msgHandler(msg) {
     case msg.text.indexOf('/start') === 0:
       bot.sendMessage(msg.chat.id, '👋你好！很高兴能与您交谈。有什么我可以帮您的吗？');
       break;
-    case msg.text.length:
-      chatGpt(msg, bot);
-      break;
     default:
-      bot.sendMessage(msg.chat.id, '❌链接解析失败');
+      chatGpt(msg, bot);
       break;
   }
 }
@@ -36,9 +33,10 @@ async function chatGpt(msg, bot) {
     // send a message and wait for the response
     const response = await api.sendMessage(msg.text)
     console.log(response)
-    bot.sendMessage(msg.chat.id, response.data);
+    bot.sendMessage(msg.chat.id, response);
   }catch(err) {
     console.log(err)
+    bot.sendMessage(msg.chat.id, '😭出错了，我需要休息一下。');
     throw err
   }
 }
