@@ -1,6 +1,6 @@
-# # dungeon ai 🔮
+# # chagpt-telebot 🔮
 
-> 💍♂️ Telegram_bot powered by [chatGPT](https://chat.openai.com)
+> 💍♂️Telegram_bot powered by [chatGPT](https://chat.openai.com)
 
 
 this app uses the [chatgpt-api](https://github.com/transitive-bullshit/chatgpt-api) package to interface with ChatGPT. 
@@ -17,16 +17,18 @@ you will need:
 1. install dependencies
 
    ```bash
+   git clone https://github.com/hobk/chagpt-telebot.git
+   cd chagpt-telebot
    npm install
    ```
 
-1. create copy of `.env.example` named `.env`
+2. create copy of `.env.example` named `.env`
 
    ```bash
    cp .env.example .env
    ```
 
-1. add your ChatGPT session token and Telegram_bot_token to the .env file
+3. add your ChatGPT session token and Telegram_bot_token to the .env file
 
    ```bash
    # inside .env
@@ -34,9 +36,9 @@ you will need:
    SESSION_TOKEN=your_session_token_here
    ```
 
-1. start the app
+4. start the app
 
    ```bash
     node index.js
-   ``` 🔮
+   ``` 
 
