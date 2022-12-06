@@ -1,5 +1,3 @@
-// const { token, sessionToken } = require('./config');
-// const TelegramBot = require('node-telegram-bot-api');
 import * as dotenv from 'dotenv'
 import { ChatGPTAPI } from 'chatgpt'
 import TelegramBot from 'node-telegram-bot-api'
@@ -9,8 +7,6 @@ const { token, sessionToken } = process.env
 const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
 
-// Listen for any kind of message. There are different kinds of
-// messages.
 bot.on('message', (msg) => {
   console.log(new Date().toLocaleString(), '--收到来自:', msg.chat.username, '的消息:', msg.text);
   msgHandler(msg);
@@ -30,7 +26,6 @@ async function chatGpt(msg, bot) {
   try {
     const api = new ChatGPTAPI({ sessionToken, markdown: false })
     await api.ensureAuth()
-    // send a message and wait for the response
     const response = await api.sendMessage(msg.text)
     console.log(response)
     bot.sendMessage(msg.chat.id, response);
@@ -40,4 +35,3 @@ async function chatGpt(msg, bot) {
     throw err
   }
 }
-
