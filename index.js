@@ -24,12 +24,12 @@ function msgHandler(msg) {
 }
 async function chatGpt(msg, bot) {
   try {
-    const api = new ChatGPTAPI({ sessionToken, markdown: false })
+    const api = new ChatGPTAPI({ sessionToken })
     await api.ensureAuth()
     const response = await api.sendMessage(msg.text)
     console.log(response)
     bot.sendMessage(msg.chat.id, response);
-  }catch(err) {
+  } catch (err) {
     console.log(err)
     bot.sendMessage(msg.chat.id, '😭出错了，我需要休息一下。');
     throw err
