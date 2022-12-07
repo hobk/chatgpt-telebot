@@ -8,7 +8,7 @@ const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
 
 bot.on('message', (msg) => {
-  console.log(new Date().toLocaleString(), '--收到来自:', msg.chat.username, '的消息:', msg.text);
+  console.log(new Date().toLocaleString(), '--收到来自id:', msg.chat.id, '的消息:', msg.text);
   msgHandler(msg);
 });
 
@@ -28,7 +28,7 @@ async function chatGpt(msg, bot) {
     await api.ensureAuth()
     const response = await api.sendMessage(msg.text)
     console.log(response)
-    bot.sendMessage(msg.chat.id, response);
+    bot.sendMessage(msg.chat.id, response, { parse_mode: 'Markdown' });
   } catch (err) {
     console.log(err)
     bot.sendMessage(msg.chat.id, '😭出错了，我需要休息一下。');
