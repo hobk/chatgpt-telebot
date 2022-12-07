@@ -17,7 +17,7 @@ demo:[@sisChatBot](https://t.me/sisChatBot)
 
    ```bash
    git clone https://github.com/hobk/chatgpt-telebot.git
-   cd chagpt-telebot
+   cd chatgpt-telebot
    npm install
    ```
 
