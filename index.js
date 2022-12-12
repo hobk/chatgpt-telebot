@@ -30,9 +30,9 @@ async function chatGpt(msg, bot) {
   try {
     const api = new ChatGPTAPI({ sessionToken, clearanceToken, userAgent })
     await api.ensureAuth()
-    bot.sendChatAction(msg.chat.id, 'typing')
     let tempId;
     bot.sendMessage(msg.chat.id, '🤔正在组织语言...').then((res) => {
+      bot.sendChatAction(msg.chat.id, 'typing')
       tempId = res.message_id
     })
     const response = await api.sendMessage(msg.text)
@@ -41,7 +41,7 @@ async function chatGpt(msg, bot) {
     bot.sendMessage(msg.chat.id, response, { parse_mode: 'Markdown' });
   } catch (err) {
     console.log(err)
-    bot.deleteMessage(msg.chat.id, tempId)
+    tempId && bot.deleteMessage(msg.chat.id, tempId)
     bot.sendMessage(msg.chat.id, '😭出错了，请稍后再试；如果您是管理员，请检查日志。');
     throw err
   }
