@@ -6,7 +6,7 @@ demo:[@sisChatBot](https://t.me/sisChatBot)
 
 ## 事前准备🛡️
 - 申请Telegram bot api token : https://t.me/BotFather
-- 获取ChatGPT session token 
+- 获取ChatGPT session token 和 cf_clearance
 - - 注册登录[OpenAI ChatGPT](https://chat.openai.com/chat)账号，然后打开控台-->应用程序-->Cookie-->复制名称为xxxxxx.session.token对应的value值，如下图
 - - ![image](https://www.helloimg.com/images/2022/12/07/Zy9MqR.png)
 - Node.js环境
@@ -27,12 +27,14 @@ demo:[@sisChatBot](https://t.me/sisChatBot)
     cp .env.example .env
    ```
 
-3. 把之前准备的 ChatGPT session token  和Telegram bot  token 对应写入 .env 文件
+3. 把之前准备的 ChatGPT session token、 cf_clearance 和 Telegram bot  token 对应写入 .env 文件
 
    ```bash
    # inside .env
-   TOKEN='your_telegrame_bot_token'
-   SESSION_TOKEN='your_chatGPT_session_token'
+      token='your token'
+      sessionToken = 'your session token'
+      clearanceToken = 'your clearance token'
+      userAgent='....'
    ```
 
 4. 启动
