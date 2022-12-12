@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chatgpt": "^1.2.1",
+    "chatgpt": "^2.1.1",
     "dotenv": "^16.0.3",
     "node-telegram-bot-api": "^0.60.0",
     "request": "^2.88.2"
