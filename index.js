@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv'
 import { ChatGPTAPI } from 'chatgpt'
 import TelegramBot from 'node-telegram-bot-api'
 dotenv.config()
-const { token, sessionToken, clearanceToken, userAgent } = process.env
+const { token, email, password } = process.env
 
 const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
@@ -28,7 +28,7 @@ function msgHandler(msg) {
 
 async function chatGpt(msg, bot) {
   try {
-    const api = new ChatGPTAPI({ sessionToken, clearanceToken, userAgent })
+    const api = new ChatGPTAPI({ email, password })
     await api.ensureAuth()
     let tempId;
     bot.sendMessage(msg.chat.id, '🤔正在组织语言...').then((res) => {
