@@ -6,7 +6,6 @@ dotenv.config()
 
 const { token, apiKey } = process.env
 const bot = new TelegramBot(token, { polling: true });
-let tempId = null;
 console.log(new Date().toLocaleString(), '--Bot has been started...');
 
 const api = new ChatGPTAPI({ apiKey })
@@ -28,19 +27,20 @@ function msgHandler(msg) {
       break;
   }
 }
-async function chatGpt(msg, bot) {
+function chatGpt(msg, bot) {
   try {
-    bot.sendMessage(msg.chat.id, '🤔正在组织语言...').then((res) => {
+    bot.sendMessage(msg.chat.id, '🤔正在组织语言...').then(async (res) => {
       bot.sendChatAction(msg.chat.id, 'typing')
-      tempId = res.message_id
+      let tempId = res.message_id
+      const response = await api.sendMessage(msg.text)
+      bot.deleteMessage(msg.chat.id, tempId)
+      tempId = null
+      console.log(new Date().toLocaleString(), '--AI回复:<', msg.text, '>:', response.text);
+      bot.sendMessage(msg.chat.id, response.text, { parse_mode: 'Markdown' });
     })
-    const response = await api.sendMessage(msg.text)
-    bot.deleteMessage(msg.chat.id, tempId)
-    console.log(new Date().toLocaleString(), '--AI回复:<', msg.text, '>:', response.text);
-    bot.sendMessage(msg.chat.id, response.text, { parse_mode: 'Markdown' });
+
   } catch (err) {
-    console.log(err)
-    tempId && bot.deleteMessage(msg.chat.id, tempId)
+    console.log('错误信息', err)
     bot.sendMessage(msg.chat.id, '😭出错了，请稍后再试；如果您是管理员，请检查日志。');
     throw err
   }
