@@ -1,7 +1,7 @@
 {
-  "name": "openai-bot",
+  "name": "chatgpt-telebot",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,10 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chatgpt": "^2.3.0",
     "dotenv": "^16.0.3",
     "node-telegram-bot-api": "^0.60.0",
     "puppeteer": "^19.4.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "eventsource-parser": "^0.0.5",
+    "gpt-3-encoder": "^1.1.4",
+    "keyv": "^4.5.2",
+    "p-timeout": "^6.0.0",
+    "quick-lru": "^6.1.1",
+    "uuid": "^9.0.0"
   }
 }
