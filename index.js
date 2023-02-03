@@ -7,8 +7,10 @@ dotenv.config()
 const { token, apiKey } = process.env
 const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
-
-const api = new ChatGPTAPI({ apiKey })
+const completionParams = {
+  model: 'text-davinci-003'
+}
+const api = new ChatGPTAPI({ apiKey, completionParams })
 bot.on('message', (msg) => {
   console.log(new Date().toLocaleString(), '--收到来自id:', msg.chat.id, '的消息:', msg.text);
   msgHandler(msg);
