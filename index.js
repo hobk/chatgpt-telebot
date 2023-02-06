@@ -4,46 +4,46 @@ import { ChatGPTAPI } from './libs/chatgpt-api/index.js'
 
 dotenv.config()
 
-const { token, apiKey } = process.env
+const { token, apiKey, group_name } = process.env
+const prefix = group_name ? '/' + group_name : '/gpt'
 const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
-const completionParams = {
-  model: 'text-davinci-003'
-}
-const api = new ChatGPTAPI({ apiKey, completionParams })
-bot.on('message', (msg) => {
-  console.log(new Date().toLocaleString(), '--收到来自id:', msg.chat.id, '的消息:', msg.text);
-  msgHandler(msg);
+
+const api = new ChatGPTAPI({ apiKey })
+
+bot.on('text', async (msg) => {
+  console.log(new Date().toLocaleString(), '--Received message from id:', msg.chat.id, ':', msg.text);
+  await msgHandler(msg);
 });
 
-function msgHandler(msg) {
+async function msgHandler(msg) {
+  if (typeof msg.text !== 'string' || ((msg.chat.type === 'group' || msg.chat.type === 'supergroup') && !msg.text.startsWith(prefix))) {
+    return;
+  }
   switch (true) {
-    case msg.text.indexOf('/start') === 0:
-      bot.sendMessage(msg.chat.id, '👋你好！很高兴能与您交谈。有什么我可以帮您的吗？');
+    case msg.text.startsWith('/start'):
+      await bot.sendMessage(msg.chat.id, '👋Hello! It is nice to talk to you. How can I help you?');
       break;
     case msg.text.length >= 2:
-      chatGpt(msg, bot);
+      await chatGpt(msg);
       break;
     default:
-      bot.sendMessage(msg.chat.id, '😭我不太明白您的意思。');
+      await bot.sendMessage(msg.chat.id, '😭I am not sure what you mean.');
       break;
   }
 }
-function chatGpt(msg, bot) {
-  try {
-    bot.sendMessage(msg.chat.id, '🤔正在组织语言...').then(async (res) => {
-      bot.sendChatAction(msg.chat.id, 'typing')
-      let tempId = res.message_id
-      const response = await api.sendMessage(msg.text)
-      bot.deleteMessage(msg.chat.id, tempId)
-      tempId = null
-      console.log(new Date().toLocaleString(), '--AI回复:<', msg.text, '>:', response.text);
-      bot.sendMessage(msg.chat.id, response.text, { parse_mode: 'Markdown' });
-    })
 
+async function chatGpt(msg) {
+  try {
+    const tempId = (await bot.sendMessage(msg.chat.id, '🤔正在组织语言，请稍等...')).message_id;
+    bot.sendChatAction(msg.chat.id, 'typing');
+    const response = await api.sendMessage(msg.text.replace(prefix, ''))
+    bot.deleteMessage(msg.chat.id, tempId)
+    console.log(new Date().toLocaleString(), '--AI response to <', msg.text, '>:', response.text);
+    await bot.sendMessage(msg.chat.id, response.text, { parse_mode: 'Markdown' });
   } catch (err) {
-    console.log('错误信息', err)
-    bot.sendMessage(msg.chat.id, '😭出错了，请稍后再试；如果您是管理员，请检查日志。');
+    console.log('Error:', err)
+    await bot.sendMessage(msg.chat.id, '😭Error occurred. Please try again later. If you are an administrator, please check the logs.');
     throw err
   }
 }

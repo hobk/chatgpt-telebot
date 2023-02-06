@@ -1,4 +1,4 @@
-# # 🔮ChatGPT Telegrame Bot (nodejs)
+# # 🔮ChatGPT Telegram Bot (by nodejs)
 
 <img src="https://www.helloimg.com/images/2023/02/02/oZLhl9.jpg" width = "400"/>
 
@@ -27,6 +27,7 @@
    # 2.编辑 .env
      #token='your TelegramBot token'
      #apiKey='your openAi apiKey'
+     #group_name = '群消息中需要回复的消息必须以该名称开头，如设置为'gpt'，那么群消息中必须以/gpt开头才会触发回复'
    ```
 
 3. 启动
