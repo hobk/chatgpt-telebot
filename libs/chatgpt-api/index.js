@@ -70,7 +70,7 @@ async function fetchSSE(url, options) {
 }
 
 // src/chatgpt-api.ts
-var CHATGPT_MODEL = "text-chat-davinci-002-20230126";
+var CHATGPT_MODEL = "text-chat-davinci-002-20221122";
 var USER_LABEL_DEFAULT = "User";
 var ASSISTANT_LABEL_DEFAULT = "ChatGPT";
 var ChatGPTAPI = class {

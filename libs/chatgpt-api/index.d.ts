@@ -112,7 +112,7 @@ declare class ChatGPTAPI {
     protected _apiKey: string;
     protected _apiBaseUrl: string;
     protected _debug: boolean;
-    protected _completionParams: openai.CompletionParams;
+    protected _completionParams: Omit<openai.CompletionParams, 'prompt'>;
     protected _maxModelTokens: number;
     protected _maxResponseTokens: number;
     protected _userLabel: string;
@@ -140,7 +140,7 @@ declare class ChatGPTAPI {
         apiBaseUrl?: string;
         /** @defaultValue `false` **/
         debug?: boolean;
-        completionParams?: openai.CompletionParams;
+        completionParams?: Partial<openai.CompletionParams>;
         /** @defaultValue `4096` **/
         maxModelTokens?: number;
         /** @defaultValue `1000` **/
