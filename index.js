@@ -22,13 +22,13 @@ async function msgHandler(msg) {
   }
   switch (true) {
     case msg.text.startsWith('/start'):
-      await bot.sendMessage(msg.chat.id, '👋Hello! It is nice to talk to you. How can I help you?');
+      await bot.sendMessage(msg.chat.id, '👋你好！很高兴能与您交谈。有什么我可以帮您的吗？');
       break;
     case msg.text.length >= 2:
       await chatGpt(msg);
       break;
     default:
-      await bot.sendMessage(msg.chat.id, '😭I am not sure what you mean.');
+      await bot.sendMessage(msg.chat.id, '😭我不太明白您的意思。');
       break;
   }
 }
@@ -44,7 +44,7 @@ async function chatGpt(msg) {
     await bot.editMessageText(response.text, { parse_mode: 'Markdown', chat_id: msg.chat.id, message_id: tempId });
   } catch (err) {
     console.log('Error:', err)
-    await bot.sendMessage(msg.chat.id, '😭Error occurred. Please try again later. If you are an administrator, please check the logs.');
+    await bot.sendMessage(msg.chat.id, '😭出错了，请稍后再试；如果您是管理员，请检查日志。');
     throw err
   }
 }
