@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv'
 import TelegramBot from 'node-telegram-bot-api'
-import { ChatGPTAPI } from './libs/chatgpt-api/index.js'
+import { ChatGPTAPI } from 'chatgpt'
 
 dotenv.config()
 
