@@ -35,12 +35,13 @@ async function msgHandler(msg) {
 
 async function chatGpt(msg) {
   try {
-    const tempId = (await bot.sendMessage(msg.chat.id, '🤔正在组织语言，请稍等...')).message_id;
+    const tempId = (await bot.sendMessage(msg.chat.id, '🤔正在组织语言，请稍等...', {
+      reply_to_message_id: msg.message_id
+    })).message_id;
     bot.sendChatAction(msg.chat.id, 'typing');
     const response = await api.sendMessage(msg.text.replace(prefix, ''))
-    bot.deleteMessage(msg.chat.id, tempId)
     console.log(new Date().toLocaleString(), '--AI response to <', msg.text, '>:', response.text);
-    await bot.sendMessage(msg.chat.id, response.text, { parse_mode: 'Markdown' });
+    await bot.editMessageText(response.text, { parse_mode: 'Markdown', chat_id: msg.chat.id, message_id: tempId });
   } catch (err) {
     console.log('Error:', err)
     await bot.sendMessage(msg.chat.id, '😭Error occurred. Please try again later. If you are an administrator, please check the logs.');
