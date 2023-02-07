@@ -34,6 +34,6 @@
 
    ```bash
     node index.js
-    # 或者使用 pm2 （安装：npm i pm2）
+    # 或者使用 pm2 （安装：npm i pm2 -g）
     pm2 start index.js
    ``` 
