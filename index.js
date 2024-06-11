@@ -12,7 +12,11 @@ const prefix = group_name ? '/' + group_name : '/gpt'
 const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
 
-const api = new ChatGPTAPI({ apiKey })
+const api = new ChatGPTAPI({ apiKey, completionParams: {
+  model: 'gpt-4',
+  temperature: 0.5,
+  top_p: 0.8
+}})
 
 bot.on('text', async (msg) => {
   console.log(new Date().toLocaleString(), '--Received message from id:', msg.chat.id, ':', msg.text);
