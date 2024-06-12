@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv'
 import TelegramBot from 'node-telegram-bot-api'
 import { ChatGPTAPI } from 'chatgpt'
-import {db, updateLastMessageId} from './db';
+import {db, updateLastMessageId} from './db.js';
 
 dotenv.config()
 
