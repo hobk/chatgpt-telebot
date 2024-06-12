@@ -14,9 +14,8 @@ const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
 
 const api = new ChatGPTAPI({ apiKey, completionParams: {
-  model: 'gpt-4o',
+  model: 'gpt-4-turbo',
   temperature: 0.5,
-  top_p: 0.8
 }})
 
 bot.on('text', async (msg) => {
@@ -56,6 +55,7 @@ async function chatGpt(msg) {
     bot.sendChatAction(msg.chat.id, 'typing');
     const prevMessageId = db[msg.chat.id].prevMessageId;
     const response = await api.sendMessage(msg.text.replace(prefix, ''), {parentMessageId: prevMessageId})
+    console.log(response);
     updateLastMessageId(msg.chat.id, response.id);
     console.log(new Date().toLocaleString(), '--AI response to <', msg.text, '>:', response.text);
     await bot.editMessageText(response.text, { parse_mode: 'Markdown', chat_id: msg.chat.id, message_id: tempId });
