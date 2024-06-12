@@ -15,7 +15,7 @@ console.log(new Date().toLocaleString(), '--Bot has been started...');
 
 const api = new ChatGPTAPI({ apiKey, completionParams: {
   model: model_version,
-  temperature: model_temperature,
+  temperature: Number(model_temperature),
 }})
 
 bot.on('text', async (msg) => {
