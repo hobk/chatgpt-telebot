@@ -6,8 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "start:vm": "pm2 start npm --name 'gpt bot'"
+    "start": "node src/index.js",
+    "start:vm": "pm2 start src/index.js --name 'gpt_bot'"
   },
   "keywords": [],
   "author": "",

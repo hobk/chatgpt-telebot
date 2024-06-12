@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv'
 import TelegramBot from 'node-telegram-bot-api'
 import { ChatGPTAPI } from 'chatgpt'
+import {db, updateLastMessageId} from './db';
 
 dotenv.config()
 
@@ -13,7 +14,7 @@ const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
 
 const api = new ChatGPTAPI({ apiKey, completionParams: {
-  model: 'gpt-4',
+  model: 'gpt-4o',
   temperature: 0.5,
   top_p: 0.8
 }})
@@ -53,7 +54,9 @@ async function chatGpt(msg) {
       reply_to_message_id: msg.message_id
     })).message_id;
     bot.sendChatAction(msg.chat.id, 'typing');
-    const response = await api.sendMessage(msg.text.replace(prefix, ''))
+    const prevMessageId = db[msg.chat.id].prevMessageId;
+    const response = await api.sendMessage(msg.text.replace(prefix, ''), {parentMessageId: prevMessageId})
+    updateLastMessageId(msg.chat.id, response.id);
     console.log(new Date().toLocaleString(), '--AI response to <', msg.text, '>:', response.text);
     await bot.editMessageText(response.text, { parse_mode: 'Markdown', chat_id: msg.chat.id, message_id: tempId });
 }
