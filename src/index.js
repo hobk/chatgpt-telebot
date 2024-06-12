@@ -5,7 +5,7 @@ import {db, updateLastMessageId} from './db.js';
 
 dotenv.config()
 
-const { token, apiKey, group_name, allowed_users } = process.env
+const { token, apiKey, group_name, allowed_users, model_version } = process.env
 
 const ALLOWED_USERS = JSON.parse(allowed_users)
 
@@ -14,7 +14,7 @@ const bot = new TelegramBot(token, { polling: true });
 console.log(new Date().toLocaleString(), '--Bot has been started...');
 
 const api = new ChatGPTAPI({ apiKey, completionParams: {
-  model: 'gpt-4-turbo',
+  model: model_version,
   temperature: 0.5,
 }})
 
