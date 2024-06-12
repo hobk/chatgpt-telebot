@@ -5,7 +5,7 @@ import {db, updateLastMessageId} from './db.js';
 
 dotenv.config()
 
-const { token, apiKey, group_name, allowed_users, model_version } = process.env
+const { token, apiKey, group_name, allowed_users, model_version, model_temperature } = process.env
 
 const ALLOWED_USERS = JSON.parse(allowed_users)
 
@@ -15,7 +15,7 @@ console.log(new Date().toLocaleString(), '--Bot has been started...');
 
 const api = new ChatGPTAPI({ apiKey, completionParams: {
   model: model_version,
-  temperature: 0.5,
+  temperature: model_temperature,
 }})
 
 bot.on('text', async (msg) => {
