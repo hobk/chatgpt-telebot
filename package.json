@@ -15,8 +15,8 @@
   "dependencies": {
     "chatgpt": "^5.0.6",
     "dotenv": "^16.0.3",
-    "node-telegram-bot-api": "^0.60.0",
     "request": "^2.88.2",
+    "telegraf": "^4.16.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

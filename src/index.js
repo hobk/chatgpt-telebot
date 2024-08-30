@@ -1,8 +1,9 @@
 /* globals console */
 
-import TelegramBot from 'node-telegram-bot-api'
 import { ChatGPTAPI } from 'chatgpt'
 import { db, updateLastMessageId } from './db.js'
+import { Telegraf } from 'telegraf'
+import { message } from 'telegraf/filters'
 import {
   TELEGRAM_GROUP_NAME,
   TELEGRAM_TOKEN,
@@ -13,18 +14,19 @@ import {
 } from './config.js'
 
 const prefix = TELEGRAM_GROUP_NAME ? '/' + TELEGRAM_GROUP_NAME : '/gpt'
-const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true })
+const telegraf = new Telegraf(TELEGRAM_TOKEN)
+const bot = telegraf.telegram
 console.log(new Date().toLocaleString(), '--Bot has been started...')
 
 const api = new ChatGPTAPI({
-  OPEN_AI_API_KEY,
+  apiKey: OPEN_AI_API_KEY,
   completionParams: {
     model: OPEN_AI_MODEL_VERSION,
     temperature: Number(OPEN_AI_MODEL_TEMPERATURE),
   },
 })
 
-bot.on('text', async (msg) => {
+telegraf.on(message('text'), async ({ msg }) => {
   console.log(
     new Date().toLocaleString(),
     '--Received message from id:',
@@ -32,6 +34,7 @@ bot.on('text', async (msg) => {
     ':',
     msg.text
   )
+
   await msgHandler(msg)
 })
 
@@ -71,16 +74,22 @@ async function chatGpt(msg) {
     })
   ).message_id
   bot.sendChatAction(msg.chat.id, 'typing')
+
   const prevMessageId = db[msg.chat.id].prevMessageId
+
   const response = await api.sendMessage(msg.text.replace(prefix, ''), {
     parentMessageId: prevMessageId,
   })
+
   console.log(response)
+
   updateLastMessageId(msg.chat.id, response.id)
+
   console.log(new Date().toLocaleString(), '--AI response to <', msg.text, '>:', response.text)
-  await bot.editMessageText(response.text, {
+
+  await bot.editMessageText(msg.chat.id, tempId, undefined, response.text, {
     parse_mode: 'Markdown',
-    chat_id: msg.chat.id,
-    message_id: tempId,
   })
 }
+
+telegraf.launch()
