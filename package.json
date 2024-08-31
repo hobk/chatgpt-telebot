@@ -1,7 +1,7 @@
 {
-  "name": "chatgpt-telebot",
+  "name": "chatgpt-telegram-bot",
   "type": "module",
-  "version": "1.3.2",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
