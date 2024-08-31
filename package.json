@@ -15,8 +15,16 @@
   "dependencies": {
     "chatgpt": "^5.0.6",
     "dotenv": "^16.0.3",
-    "node-telegram-bot-api": "^0.60.0",
     "request": "^2.88.2",
+    "telegraf": "^4.16.3",
+    "telegramify-markdown": "^1.2.2",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "eslint": "^9.9.1",
+    "globals": "^15.9.0",
+    "prettier": "3.3.3",
+    "typescript-eslint": "^8.3.0"
   }
 }
