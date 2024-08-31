@@ -12,6 +12,7 @@ import {
   OPEN_AI_MODEL_VERSION,
   OPEN_AI_MODEL_TEMPERATURE,
 } from './config.js'
+import { escapeMarkdownCharacters } from './utils/markdown.js'
 
 const prefix = TELEGRAM_GROUP_NAME ? '/' + TELEGRAM_GROUP_NAME : '/gpt'
 const telegraf = new Telegraf(TELEGRAM_TOKEN)
@@ -70,7 +71,7 @@ async function msgHandler(msg) {
 async function chatGpt(msg) {
   const tempId = (
     await bot.sendMessage(msg.chat.id, '🤔Please wait...', {
-      reply_to_message_id: msg.message_id,
+      reply_parameters: { message_id: msg.message_id },
     })
   ).message_id
   bot.sendChatAction(msg.chat.id, 'typing')
@@ -87,9 +88,15 @@ async function chatGpt(msg) {
 
   console.log(new Date().toLocaleString(), '--AI response to <', msg.text, '>:', response.text)
 
-  await bot.editMessageText(msg.chat.id, tempId, undefined, response.text, {
-    parse_mode: 'Markdown',
-  })
+  await bot.editMessageText(
+    msg.chat.id,
+    tempId,
+    undefined,
+    escapeMarkdownCharacters(`${response.text}`),
+    {
+      parse_mode: 'MarkdownV2',
+    }
+  )
 }
 
 telegraf.launch()
