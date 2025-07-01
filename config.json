@@ -1,0 +1,39 @@
+{
+  "openai": {
+    "model": "gpt-3.5-turbo",
+    "maxTokens": 2048,
+    "temperature": 0.7,
+    "topP": 1,
+    "frequencyPenalty": 0,
+    "presencePenalty": 0,
+    "maxRetries": 3,
+    "timeout": 30000
+  },
+  "telegram": {
+    "groupPrefix": "/gpt",
+    "maxContextLength": 10,
+    "maxMessageLength": 4096,
+    "typingTimeout": 5000
+  },
+  "access": {
+    "whitelist": {
+      "enabled": false,
+      "users": [],
+      "groups": []
+    },
+    "blacklist": {
+      "enabled": false,
+      "users": [],
+      "groups": []
+    }
+  },
+  "messages": {
+    "welcome": "👋你好！我是ChatGPT助手。有什么我可以帮您的吗？\n\n💡 可用命令：\n/clear - 清除对话历史\n/help - 查看帮助",
+    "thinking": "🤔正在思考中，请稍等...",
+    "cleared": "✅ 对话历史已清除",
+    "error": "😭出错了，请稍后再试",
+    "unauthorized": "⛔ 抱歉，您没有使用权限",
+    "tooLong": "📝 消息太长了，请分段发送",
+    "help": "🤖 ChatGPT Telegram Bot\n\n📋 可用命令：\n/start - 开始对话\n/clear - 清除对话历史\n/help - 查看此帮助\n\n💭 直接发送消息即可与AI对话\n📱 在群组中需要以前缀开头（默认：/gpt）"
+  }
+}
