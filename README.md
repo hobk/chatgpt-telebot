@@ -36,4 +36,6 @@
     node index.js
     # 或者使用 pm2 （安装：npm i pm2 -g）
     pm2 start index.js
-   ``` 
+   ```
+
+   [![使用 EdgeOne Pages 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fhobk%2Fchatgpt-telebot%2F)
